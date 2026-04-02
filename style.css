@@ -1,74 +1,274 @@
-* {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap');
+
+/* ========== RESET ========== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
+/* ========== ROOT ========== */
+:root {
+  --bg: #0d0d0d;
+  --surface: #161616;
+  --surface2: #1f1f1f;
+  --border: rgba(255, 255, 255, 0.07);
+  --text: #f0f0f0;
+  --text-muted: #555;
+  --accent: #c8ff00;
+  --accent-dim: rgba(200, 255, 0, 0.08);
+  --operator: #2a2a2a;
+  --operator-text: #c8ff00;
+  --danger: #ff4d4d;
+  --danger-dim: rgba(255, 77, 77, 0.1);
+  --equals: #c8ff00;
+  --equals-text: #0d0d0d;
+  --number: #1f1f1f;
+  --number-text: #f0f0f0;
+  --radius: 14px;
+  --radius-sm: 10px;
+}
+
+/* ========== BODY ========== */
 body {
-    font-family: 'Poppins', sans-serif;
+  font-family: 'DM Mono', monospace;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background-image:
+    radial-gradient(ellipse 60% 50% at 30% 20%, rgba(200, 255, 0, 0.03) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 80% 80%, rgba(200, 255, 0, 0.02) 0%, transparent 60%);
 }
 
+/* ========== CALCULATOR BG ========== */
 .cal-bg {
-    background-color: whitesmoke;
-    height: 100vh;
-    padding: 40px 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* ========== CONTAINER ========== */
 .cal-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
-    max-width: 500px;
-    min-height: 500px;
-    margin: 0 auto;
-    background-color: rgb(230, 214, 214);
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04),
+    0 32px 80px rgba(0, 0, 0, 0.6);
+  transition: box-shadow 0.3s ease;
 }
 
-.cal-bg .cal-container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+.cal-container:hover {
+  box-shadow:
+    0 0 0 1px rgba(200, 255, 0, 0.08),
+    0 40px 100px rgba(0, 0, 0, 0.7);
 }
 
-.cal-bg .cal-container h1 {}
-
-.cal-bg .cal-container .cal-input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    width: 400px;
-    height: 40px;
+/* ========== TITLE ========== */
+.cal-container h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: center;
 }
 
-.cal-bg .cal-container .cal-input:focus {
-    outline: none;
-    border-color: rgb(230, 214, 214);
+/* ========== DISPLAY ========== */
+.cal-input {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.4rem;
+  width: 100%;
+  height: auto;
+  font-family: 'DM Mono', monospace;
+  font-size: clamp(1.6rem, 6vw, 2.2rem);
+  font-weight: 500;
+  color: var(--text);
+  text-align: right;
+  letter-spacing: -0.5px;
+  caret-color: var(--accent);
+  transition: border-color 0.2s, background 0.2s;
 }
 
-.cal-bg .cal-container .cal-btns {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    width: 400px;
-    height: 250px;
-    gap: 10px;
+.cal-input:focus {
+  outline: none;
+  border-color: rgba(200, 255, 0, 0.25);
+  background: #222;
 }
 
-.cal-bg .cal-container .cal-btns button {
-    border: none;
-    border-radius: 10px;
-    background-color: rgb(230, 214, 214);
-    font-size: 20px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: solid 1px transparent;
+/* ========== BUTTON GRID ========== */
+.cal-btns {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  width: 100%;
+  height: auto;
 }
 
-.cal-bg .cal-container .cal-btns button:hover {
-    background-color: rgb(200, 200, 200);
-    border: solid 1px rgb(200, 200, 200);
+/* ========== BASE BUTTON ========== */
+.cal-btns button {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: 'DM Mono', monospace;
+  font-size: clamp(1rem, 4vw, 1.2rem);
+  font-weight: 500;
+  cursor: pointer;
+  padding: 1rem 0.5rem;
+  transition: transform 0.1s ease, background 0.15s ease, border-color 0.15s ease;
+  line-height: 1;
+}
+
+.cal-btns button:active {
+  transform: scale(0.93);
+}
+
+/* ========== NUMBER BUTTONS ========== */
+.number-btn {
+  background: var(--number);
+  color: var(--number-text);
+}
+
+.number-btn:hover {
+  background: #2a2a2a;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ========== OPERATOR BUTTONS ========== */
+.operation-btn {
+  background: var(--operator);
+  color: var(--operator-text);
+  font-weight: 600;
+}
+
+.operation-btn:hover {
+  background: rgba(200, 255, 0, 0.12);
+  border-color: rgba(200, 255, 0, 0.25);
+}
+
+/* ========== DECIMAL BUTTON ========== */
+.decimal-btn {
+  background: var(--operator);
+  color: var(--operator-text);
+  font-weight: 600;
+}
+
+.decimal-btn:hover {
+  background: rgba(200, 255, 0, 0.12);
+  border-color: rgba(200, 255, 0, 0.25);
+}
+
+/* ========== EQUALS BUTTON ========== */
+.equals-btn {
+  background: var(--equals);
+  color: var(--equals-text);
+  font-size: clamp(1rem, 4vw, 1.3rem);
+  font-weight: 700;
+  border-color: transparent;
+}
+
+.equals-btn:hover {
+  background: #d4ff1a;
+  border-color: transparent;
+  box-shadow: 0 6px 24px rgba(200, 255, 0, 0.25);
+}
+
+/* ========== CLEAR BUTTON ========== */
+.clear {
+  background: var(--danger-dim);
+  color: var(--danger);
+  border-color: rgba(255, 77, 77, 0.15);
+  font-weight: 700;
+}
+
+.clear:hover {
+  background: rgba(255, 77, 77, 0.18);
+  border-color: rgba(255, 77, 77, 0.3);
+}
+
+/* ========== CE BUTTON ========== */
+.ce-btn {
+  background: var(--surface2);
+  color: var(--text-muted);
+  font-size: clamp(0.75rem, 3vw, 0.85rem);
+  letter-spacing: 0.5px;
+}
+
+.ce-btn:hover {
+  background: #2a2a2a;
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ========== PERCENT BUTTON ========== */
+.percent-btn {
+  background: var(--surface2);
+  color: var(--text-muted);
+}
+
+.percent-btn:hover {
+  background: #2a2a2a;
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ========== DEL BUTTON ========== */
+.del-btn {
+  background: var(--surface2);
+  color: var(--danger);
+  font-size: clamp(0.75rem, 3vw, 0.85rem);
+  border-color: rgba(255, 77, 77, 0.1);
+  letter-spacing: 0.5px;
+}
+
+.del-btn:hover {
+  background: var(--danger-dim);
+  border-color: rgba(255, 77, 77, 0.2);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 420px) {
+  body {
+    padding: 1rem;
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
+
+  .cal-container {
+    padding: 1.2rem;
+    gap: 1rem;
+    border-radius: 20px;
+  }
+
+  .cal-btns {
+    gap: 8px;
+  }
+
+  .cal-btns button {
+    padding: 0.9rem 0.4rem;
+    border-radius: 8px;
+  }
+
+  .cal-input {
+    padding: 1rem 1.1rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .cal-btns button {
+    padding: 0.75rem 0.3rem;
+    font-size: 0.95rem;
+  }
 }
